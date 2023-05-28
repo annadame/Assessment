@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SocialBrothersAssessment.Models;
+using System.Reflection;
 
 namespace SocialBrothersAssessment.Controllers
 {
@@ -16,13 +18,45 @@ namespace SocialBrothersAssessment.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
+        public async Task<ActionResult<IEnumerable<Address>>> GetAddresses(string? filter, string? orderBy)
         {
             if (_context.Addresses == null)
             {
                 return NotFound();
             }
-            return await _context.Addresses.ToListAsync();
+
+            var addresses = await _context.Addresses.ToListAsync();
+            
+            // Filtering by getting all fields of the object and checking for matches in each field - object pair
+            if (!filter.IsNullOrEmpty())
+            {
+                var filteredAddresses = new List<Address>();
+                FieldInfo[] addressFields = typeof(Address).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+                foreach (FieldInfo field in addressFields)
+                {
+                    filteredAddresses.AddRange(addresses.Where(a => field.GetValue(a).Equals(filter) && !filteredAddresses.Any(f => f.Id == a.Id)));
+                }
+
+                addresses = filteredAddresses;
+            }
+
+            // Sorting possible on all fields, both ascending and descending, e.g. Country;asc
+            if (!orderBy.IsNullOrEmpty())
+            {
+                var query = orderBy.Split(';');
+                var field = typeof(Address).GetProperty(query[0]);
+                bool asc = query[1].Equals("asc");
+
+                if (field == null)
+                {
+                    return BadRequest($"Field {query[0]} for ordering does not exist");
+                }
+
+                if (asc) { addresses = addresses.OrderBy(field.GetValue).ToList(); }
+                else { addresses = addresses.OrderByDescending(field.GetValue).ToList(); }
+            }
+
+            return addresses;
         }
 
         [HttpGet("{id}")]
