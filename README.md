@@ -12,7 +12,7 @@ Zorg ervoor dat een IDE geïnstalleerd is op je apparaat dat het .NET framework 
 
 ## Gebruik
 <strong>Filteren en sorteren</strong>  
-Deze functionaliteiten zitten ingebouwd in het `GET /addresses` endpoint. Voor het filter kan een woord of cijfer ingevoerd worden en alle adressen in de database die een veld hebben dat matcht met deze query, worden gereturned. Om te sorteren dient exact (hoofdletter gevoelig, en alle velden beginnen ook met hoofdletter) het juiste veld mee gegeven te worden in combinatie met of het in oplopende en aflopende volgorde moet. Voorbeelden:  
+Deze functionaliteiten zitten ingebouwd in het `GET /addresses` endpoint. Voor het filter kan een woord of cijfer ingevoerd worden en alle adressen in de database die een veld hebben dat matched met deze query, worden gereturned. Om te sorteren dient exact (hoofdletter gevoelig, en alle velden beginnen ook met hoofdletter) het juiste veld mee gegeven te worden in combinatie met of het in oplopende of aflopende volgorde moet. Voorbeelden:  
 `HouseNumber;asc`  
 `ZipCode;desc`
 
