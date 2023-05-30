@@ -25,7 +25,7 @@ Note: momenteel staat de API key in `app.config` ook in de GitHub repository, vo
 
 ## Reflectie
 ### Tevreden
-In het algemeen ben ik tevreden over de structuur van het project / hoe het opgezet is. Er zijn duidelijke model en controller lagen (en indien nodig) kunnen daar view lagen bij, maar dat viel buiten deze opdracht. Daarnaast vind ik de code gestructureerd en leesbaar.
+In het algemeen ben ik tevreden over de structuur van het project / hoe het opgezet is. Er zijn duidelijke model en controller lagen en daarnaast vind ik de code gestructureerd en leesbaar. Uiteraard hielp daarbij ook dat het een eenvoudige API is.
 
 Ook ben ik blij met hoe dynamisch het filteren en sorteren is. Een veld meer of minder zal niet voor problemen in de code zorgen.
 
