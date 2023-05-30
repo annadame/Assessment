@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SocialBrothersAssessment.Models;
+using System.Collections.Specialized;
 using System.Reflection;
 
 namespace SocialBrothersAssessment.Controllers
@@ -12,11 +13,13 @@ namespace SocialBrothersAssessment.Controllers
     {
         private readonly AddressDbContext _context;
         private HttpClient _client;
+        private NameValueCollection _appSettings;
 
         public AddressController(AddressDbContext context)
         {
             _context = context;
             _client = new HttpClient();
+            _appSettings = System.Configuration.ConfigurationManager.AppSettings;
         }
 
         [HttpGet]
@@ -143,7 +146,7 @@ namespace SocialBrothersAssessment.Controllers
             var origin = GetAddressText(org_response.Value);
             var destination = GetAddressText(dest_response.Value);
 
-            var token = "eUgV4RvqOpCSkhMc7t8y8F4fPtdS6";
+            var token = _appSettings["distanceMatrixAPI"];
             var path = $"https://api.distancematrix.ai/maps/api/distancematrix/json?origins={origin}&destinations={destination}&key={token}";
 
             HttpResponseMessage response = await _client.GetAsync(path);
