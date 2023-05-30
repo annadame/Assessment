@@ -11,10 +11,12 @@ namespace SocialBrothersAssessment.Controllers
     public class AddressController : ControllerBase
     {
         private readonly AddressDbContext _context;
+        private HttpClient _client;
 
         public AddressController(AddressDbContext context)
         {
             _context = context;
+            _client = new HttpClient();
         }
 
         [HttpGet]
@@ -125,6 +127,38 @@ namespace SocialBrothersAssessment.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("distance")]
+        public async Task<IActionResult> GetDistance(long org_id, long dest_id)
+        {
+            var org_response = await GetAddress(org_id);
+            var dest_response = await GetAddress(dest_id);
+
+            if (org_response.Value == null || dest_response.Value == null)
+            {
+                return BadRequest("One of the addresses does not exist in the database");
+            }
+
+            var origin = GetAddressText(org_response.Value);
+            var destination = GetAddressText(dest_response.Value);
+
+            var token = "eUgV4RvqOpCSkhMc7t8y8F4fPtdS6";
+            var path = $"https://api.distancematrix.ai/maps/api/distancematrix/json?origins={origin}&destinations={destination}&key={token}";
+
+            HttpResponseMessage response = await _client.GetAsync(path);
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest();
+            }
+
+            var distance = await response.Content.ReadAsStringAsync();
+            return Ok(distance);
+        }
+
+        private string GetAddressText(Address address)
+        {
+            return string.Join(" ", address.Street, address.HouseNumber.ToString(), address.ZipCode, address.City, address.Country);
         }
 
         // TODO: Try to leave out function
