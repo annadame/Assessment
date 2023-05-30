@@ -92,11 +92,7 @@ namespace SocialBrothersAssessment.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAddress(long id, Address address)
         {
-            if (id != address.Id)
-            {
-                return BadRequest("New id does not match original id");
-            }
-
+            address.Id = id;
             _context.Entry(address).State = EntityState.Modified;
 
             try
