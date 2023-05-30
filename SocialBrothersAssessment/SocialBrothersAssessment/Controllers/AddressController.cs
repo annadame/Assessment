@@ -77,41 +77,35 @@ namespace SocialBrothersAssessment.Controllers
             return address;
         }
 
-        // TODO: Make Id non-changable
         [HttpPost]
         public async Task<ActionResult<Address>> PostAddress(Address address)
         {
+            // Set Id to 0 to ensure the use of auto increment
+            address.Id = 0;
+
             _context.Addresses.Add(address);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetAddress), new { id = address.Id }, address);
         }
 
-        // TODO: Make Id non-changable
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAddress(long id, Address address)
         {
-            if (id != address.Id)
-            {
-                return BadRequest();
-            }
-
+            address.Id = id;
             _context.Entry(address).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) 
             {
-                if (!AddressExists(id))
+                if (!(_context.Addresses?.Any(e => e.Id == id)).GetValueOrDefault())
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                else { throw; }
             }
 
             return NoContent();
@@ -162,12 +156,6 @@ namespace SocialBrothersAssessment.Controllers
         private string GetAddressText(Address address)
         {
             return string.Join(" ", address.Street, address.HouseNumber.ToString(), address.ZipCode, address.City, address.Country);
-        }
-
-        // TODO: Try to leave out function
-        private bool AddressExists(long id)
-        {
-            return (_context.Addresses?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
