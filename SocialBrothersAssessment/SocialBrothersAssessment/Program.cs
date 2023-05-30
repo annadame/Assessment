@@ -11,8 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add connection to Sqlite database
-var DbPath = Path.Join(Environment.CurrentDirectory, "addresses.db");
-builder.Services.AddEntityFrameworkSqlite().AddDbContext<AddressDbContext>(options => { options.UseSqlite($"Data Source={DbPath}"); });
+var dbPath = Path.Join(Environment.CurrentDirectory, "addresses.db");
+builder.Services.AddEntityFrameworkSqlite().AddDbContext<AddressDbContext>(options => { options.UseSqlite($"Data Source={dbPath}"); });
 
 var app = builder.Build();
 
