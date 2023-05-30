@@ -39,7 +39,7 @@ namespace SocialBrothersAssessment.Controllers
                 FieldInfo[] addressFields = typeof(Address).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
                 foreach (FieldInfo field in addressFields)
                 {
-                    filteredAddresses.AddRange(addresses.Where(a => field.GetValue(a).Equals(filter) && !filteredAddresses.Any(f => f.Id == a.Id)));
+                    filteredAddresses.AddRange(addresses.Where(a => field.GetValue(a).ToString().Equals(filter) && !filteredAddresses.Any(f => f.Id == a.Id)));
                 }
 
                 addresses = filteredAddresses;
@@ -127,10 +127,10 @@ namespace SocialBrothersAssessment.Controllers
         }
 
         [HttpGet("distance")]
-        public async Task<IActionResult> GetDistance(long org_id, long dest_id)
+        public async Task<IActionResult> GetDistance(long orgId, long destId)
         {
-            var org_response = await GetAddress(org_id);
-            var dest_response = await GetAddress(dest_id);
+            var org_response = await GetAddress(orgId);
+            var dest_response = await GetAddress(destId);
 
             if (org_response.Value == null || dest_response.Value == null)
             {
