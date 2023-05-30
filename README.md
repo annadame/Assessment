@@ -23,5 +23,13 @@ Het endpoint `GET /addresses/distance` geeft de afstand terug tussen twee adress
 Note: momenteel staat de API key in `app.config` ook in de GitHub repository, voor het gemak. Normaliter zou ik dit bestand niet op de GitHub plaatsen, maar een uitleg geven hoe en waar de key lokaal op te slaan. De huidige key is geldig t/m 06/06/2023.
 
 
+## Reflectie
+### Tevreden
+In het algemeen ben ik tevreden over de structuur van het project / hoe het opgezet is. Er zijn duidelijke model en controller lagen (en indien nodig) kunnen daar view lagen bij, maar dat viel buiten deze opdracht. Daarnaast vind ik de code gestructureerd en leesbaar.
 
+Ook ben ik blij met hoe dynamisch het filteren en sorteren is. Een veld meer of minder zal niet voor problemen in de code zorgen.
 
+### Minder tevreden
+Tegelijkertijd ben ik ook minder tevreden met de implementatie van het filteren en sorteren, aangezien ik type reflection gebruik en dit kan traag zijn. Dit was alleen voor nu de enige dynamische oplossing die ik kon bedenken.
+
+Ook had ik graag een niet case sensitive sortering ingebouwd zodat de functionaliteit gebruiksvriendelijker is, maar dit was niet mogelijk met hoe ik het nu geïmplementeerd heb.
