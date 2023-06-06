@@ -20,7 +20,8 @@ Deze functionaliteiten zitten ingebouwd in het `GET /addresses` endpoint. Voor h
 <strong>Afstanden berekenen</strong>  
 Het endpoint `GET /addresses/distance` geeft de afstand terug tussen twee adressen, berekend met de [DistanceMatrix API](https://distancematrix.ai/). Je geeft 2 bestaande id's mee van adressen die in de database staan, en krijgt o.a. de afstand in kilometers terug.
 
-Note: momenteel staat de API key in `app.config` ook in de GitHub repository, voor het gemak. Normaliter zou ik dit bestand niet op de GitHub plaatsen, maar een uitleg geven hoe en waar de key lokaal op te slaan. De huidige key is geldig t/m 06/06/2023.
+Note: momenteel staat de API key in `app.config` ook in de GitHub repository, voor het gemak. Normaliter zou ik dit bestand niet op de GitHub plaatsen, maar een uitleg geven hoe en waar de key lokaal op te slaan. De huidige key is geldig t/m 06/06/2023.  
+Update 06/06/2023: De API key is vernieuwd en is nu geldig tot 13/06/20123.
 
 
 ## Reflectie
